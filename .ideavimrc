@@ -6,8 +6,8 @@
 
 set scrolloff=10
 set relativenumber
-set showmode
-set showcmd
+:set showmode
+:set showcmd
 
 set smartcase
 set incsearch
@@ -26,7 +26,7 @@ let mapleader = " "
 
 set surround
 set highlightedyank
-set nerdtree
+set NERDTree
 
 " Easymotion settings
 set easymotion
@@ -171,7 +171,7 @@ map <leader>as <action>(SearchEverywhere)
 map <leader>ff <action>(GotoFile)
 map <leader>fr <action>(RecentFiles)
 map <leader>fc <action>(FindInPath)
-map <leader><leader> <Action>(RecentFiles)
+map <leader><leader> <action>(RecentFiles)
 map <leader>fl <action>(RecentLocations)
 map <leader>fs <action>(NewScratchFile)
 
@@ -204,3 +204,10 @@ map <leader>gb <Action>(Git.Branches)
 map <leader>en <Action>(ReSharperGotoNextErrorInSolution)
 map <leader>ep <Action>(ReSharperGotoPrevErrorInSolution)
 
+" Terminal
+nnoremap <c-t> :action ActivateTerminalToolWindow<CR>
+nnoremap <leader>t :action Terminal.OpenInTerminal<CR>
+
+" Tab Switching
+nmap <c-l> <Action>(NextTab)
+nmap <c-h> <action>(PreviousTab)
