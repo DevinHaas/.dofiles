@@ -111,18 +111,15 @@ let g:WhichKeyDesc_errors_prev = "<leader>ep Go to previous error in solution"
 inoremap jk <Esc>
 
 " Tab navigation
-nnoremap <A-n> :tabnext<CR>
-nnoremap <A-p> :tabprev<CR>
+nnoremap <c-l> :tabnext<CR>
+nnoremap <c-h> :tabprev<CR>
 
 " Pane navigation
 nnoremap <A-h> <C-w>h
 nnoremap <A-l> <C-w>l
 nnoremap <A-k> <C-w>k
-nnoremap <A-j> <C-w>j
+nnoremap <A-J> <C-w>j
 
-" Jump between methods
-nnoremap [[ <Action>(MethodUp)
-nnoremap ]] <Action>(MethodDown)
 
 " Easy visual indentation
 vnoremap < <gv
@@ -153,10 +150,10 @@ map <leader>zc :action CollapseAllRegions<CR>
 map <leader>zo :action ExpandAllRegions<CR>
 
 " Window splits
-map <leader>wv <Action>(SplitVertically)
+map <leader>wv <Action>(SplitVerticAlly)
 map <leader>ws <Action>(SplitHorizontally)
 map <leader>wu <Action>(Unsplit)
-map <leader>wm <Action>(MoveEditorToOppositeTabGroup)
+map <leader>wm <Action>(MoveEditorToOppositeTaBGroup)
 
 " Display options
 map <leader>dd <action>(ToggleDistractionFreeMode)
@@ -164,6 +161,7 @@ map <leader>dz <action>(ToggleZenMode)
 map <leader>df <action>(ToggleFullScreen)
 
 " Actions
+map <leader>aa <action>(GotoAction)
 map <leader>am <action>(ShowIntentionActions)
 map <leader>as <action>(SearchEverywhere)
 
@@ -178,36 +176,30 @@ map <leader>fs <action>(NewScratchFile)
 " Close active tab
 map <leader>q <action>(CloseContent)
 
-" Refactoring
-map <leader>rn <Action>(RenameElement)
-map <leader>rm <Action>(ExtractMethod)
-map <leader>rv <Action>(IntroduceVariable)
-map <leader>rf <Action>(IntroduceField)
-map <leader>rs <Action>(ChangeSignature)
-map <leader>rr <Action>(Refactorings.QuickListPopupAction)
-
-" Go to code
-nmap <leader>gd <Action>(GotoDeclaration)
-nmap <leader>gy <Action>(GotoTypeDeclaration)
-nmap <leader>gi <Action>(GotoImplementation)
-nmap <leader>gu <Action>(ShowUsages)
-nmap <leader>gt <Action>(GotoTest)
-nmap <leader>gf <Action>(Back)
-nmap <leader>gb <Action>(Forward)
-
-" Git windows
-map <leader>gc <Action>(CheckinProject)
-map <leader>gs <Action>(ActivateVersionControlToolWindow)
-map <leader>gb <Action>(Git.Branches)
-
-" Errors
-map <leader>en <Action>(ReSharperGotoNextErrorInSolution)
-map <leader>ep <Action>(ReSharperGotoPrevErrorInSolution)
-
 " Terminal
 nnoremap <c-t> :action ActivateTerminalToolWindow<CR>
 nnoremap <leader>t :action Terminal.OpenInTerminal<CR>
 
-" Tab Switching
-nmap <c-l> <Action>(NextTab)
-nmap <c-h> <action>(PreviousTab)
+
+" Switcher
+map <leader>s :action Switcher<CR><C-m>
+
+" Vertical Movement
+nnoremap <C-u> <C-u>zz
+nnoremap <C-d> <C-d>zz
+
+nnoremap n nzz
+nnoremap N Nzz
+
+" Replacing stuff
+xnoremap <leader>p "_dP
+
+" Stop searching
+nnoremap <leader>h :noh<CR>
+
+" Hide all windows
+nnoremap <leader>m :action HideActiveWindow<CR>
+nnoremap <leader>ma :action HideAllWindows<CR>
+
+" jump to last window
+map <leader>l :action JumpToLastWindow<CR>
