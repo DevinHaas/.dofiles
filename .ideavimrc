@@ -108,7 +108,7 @@ let g:WhichKeyDesc_errors_prev = "<leader>ep Go to previous error in solution"
 "" Key mappings
 "" ========================================================
 
-inoremap jk <Esc>
+inoremap kj <Esc>
 
 " Tab navigation
 nnoremap <c-l> :tabnext<CR>
@@ -203,3 +203,13 @@ nnoremap <leader>ma :action HideAllWindows<CR>
 
 " jump to last window
 map <leader>l :action JumpToLastWindow<CR>
+
+
+" Go to code
+nmap <leader>gd <Action>(GotoDeclaration)
+nmap <leader>gy <Action>(GotoTypeDeclaration)
+nmap <leader>gi <Action>(GotoImplementation)
+nmap <leader>gu <Action>(ShowUsages)
+nmap <leader>gt <Action>(GotoTest)
+nmap <leader>gf <Action>(Back)
+nmap <leader>gb <Action>(Forward)
