@@ -110,6 +110,10 @@ let g:WhichKeyDesc_errors_prev = "<leader>ep Go to previous error in solution"
 
 inoremap kj <Esc>
 
+" Project Navigation
+map <A-S-l> :action NextProjectWindow<CR>
+map <A-S-h> :action PreviousProjectWindow<CR>
+
 " Tab navigation
 nnoremap <c-l> :tabnext<CR>
 nnoremap <c-h> :tabprev<CR>
