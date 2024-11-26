@@ -111,8 +111,8 @@ let g:WhichKeyDesc_errors_prev = "<leader>ep Go to previous error in solution"
 inoremap kj <Esc>
 
 " Project Navigation
-map <A-S-l> :action NextProjectWindow<CR>
-map <A-S-h> :action PreviousProjectWindow<CR>
+map <A-C-l> :action NextProjectWindow<CR>
+map <A-C-h> :action PreviousProjectWindow<CR>
 
 " Tab navigation
 nnoremap <c-l> :tabnext<CR>
@@ -158,11 +158,6 @@ map <leader>wv <Action>(SplitVerticAlly)
 map <leader>ws <Action>(SplitHorizontally)
 map <leader>wu <Action>(Unsplit)
 map <leader>wm <Action>(MoveEditorToOppositeTaBGroup)
-
-" Display options
-map <leader>dd <action>(ToggleDistractionFreeMode)
-map <leader>dz <action>(ToggleZenMode)
-map <leader>df <action>(ToggleFullScreen)
 
 " Actions
 map <leader>aa <action>(GotoAction)
@@ -217,3 +212,17 @@ nmap <leader>gu <Action>(ShowUsages)
 nmap <leader>gt <Action>(GotoTest)
 nmap <leader>gf <Action>(Back)
 nmap <leader>gb <Action>(Forward)
+
+" Refactoring
+map <leader>rn <Action>(RenameElement)
+map <leader>rm <Action>(ExtractMethod)
+map <leader>rv <Action>(IntroduceVariable)
+map <leader>rf <Action>(IntroduceField)
+map <leader>rs <Action>(ChangeSignature)
+map <leader>rr <Action>(Refactorings.QuickListPopupAction)
+
+
+" Git windows
+map <leader>gc <Action>(CheckinProject)
+map <leader>gs <Action>(ActivateVersionControlToolWindow)
+map <leader>gb <Action>(Git.Branches)
