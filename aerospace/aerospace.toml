@@ -15,7 +15,7 @@ after-login-command = []
 after-startup-command = []
 
 # Start AeroSpace at login
-start-at-login = false 
+start-at-login = true
 
 # Normalizations. See: https://nikitabobko.github.io/AeroSpace/guide#normalization
 enable-normalization-flatten-containers = true
@@ -122,10 +122,11 @@ ctrl-9 = 'workspace 9'
 alt-b = 'workspace B' #for Browser
 alt-c = 'workspace C' #for Code
 alt-e = 'workspace E' #for Finder
-alt-n = 'workspace N' #for Notes (Obsidian)
+alt-o = 'workspace O' #for Notes (Obsidian)
 alt-m = 'workspace M' #fro mail 
 alt-t = 'workspace T' #for Terminal
 alt-s = 'workspace S' #for spotify 
+alt-p = 'workspace P' #for postman 
 
 
 alt-shift-f = 'fullscreen'
@@ -144,9 +145,10 @@ alt-shift-b = 'move-node-to-workspace B'
 alt-shift-c = 'move-node-to-workspace C'
 alt-shift-e = 'move-node-to-workspace E'
 alt-shift-m = 'move-node-to-workspace M'
-alt-shift-n = 'move-node-to-workspace N'
+alt-shift-o = 'move-node-to-workspace O'
 alt-shift-t = 'move-node-to-workspace T'
 alt-shift-s = 'move-node-to-workspace S'
+alt-shift-p = 'move-node-to-workspace P'
 
 
 # See: https://nikitabobko.github.io/AeroSpace/commands#workspace-back-and-forth
@@ -173,12 +175,12 @@ alt-shift-l = ['join-with right', 'mode main']
 
 
 [[on-window-detected]]
-if.app-id = 'dev.warp.Warp-Stable'
+if.app-id = 'org.alacritty'
 run = "move-node-to-workspace T"
 
 [[on-window-detected]]
 if.app-id = 'md.obsidian'
-run = "move-node-to-workspace N"
+run = "move-node-to-workspace O"
 
 [[on-window-detected]]
 if.app-id = 'company.thebrowser.Browser'
@@ -208,4 +210,23 @@ run = "move-node-to-workspace W"
 [[on-window-detected]]
 if.app-id = 'com.figma.Desktop'
 run = "move-node-to-workspace D"
+
+
+[[on-window-detected]]
+if.app-id = 'com.postmanlabs.mac'
+run = "move-node-to-workspace P"
+
+[[on-window-detected]]
+if.app-name-regex-substring = 'finder'
+run = 'layout floating'
+
+[[on-window-detected]]
+if.app-id = 'com.bitwarden.desktop'
+run = 'layout floating'
+
+
+[[on-window-detected]]
+if.app-id = 'com.apple.systempreferences'
+run = 'layout floating'
+
 
