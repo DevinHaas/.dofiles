@@ -20,12 +20,6 @@ keymap.set("n", "<Leader>Q", ":qa<Return>", opts)
 keymap.set("n", "<Leader>f", ":NvimTreeFindFile<Return>", opts)
 keymap.set("n", "<Leader>x", ":NvimTreeToggle<Return>", opts)
 
--- Tabs
-keymap.set("n", "te", ":tabedit")
-keymap.set("n", "<C-l>", ":tabnext<Return>", opts)
-keymap.set("n", "<C-h>", ":tabprev<Return>", opts)
-keymap.set("n", "tw", ":tabclose<Return>", opts)
-
 -- Split window
 keymap.set("n", "<leader>wv", ":vsplit<Return>", opts) -- Vertical split
 keymap.set("n", "<leader>ws", ":split<Return>", opts) -- Horizontal split
@@ -49,23 +43,22 @@ harpoon:setup()
 -- REQUIRED
 
 keymap.set("n", "<leader>a", function()
-  print("Leader A pressed") -- Debugging
   harpoon:list():add()
 end)
 keymap.set("n", "<C-e>", function()
   harpoon.ui:toggle_quick_menu(harpoon:list())
 end)
 
-keymap.set("n", "<C-h>", function()
+keymap.set("n", "<C-1>", function()
   harpoon:list():select(1)
 end)
-keymap.set("n", "<C-t>", function()
+keymap.set("n", "<C-2>", function()
   harpoon:list():select(2)
 end)
-keymap.set("n", "<C-n>", function()
+keymap.set("n", "<C-3>", function()
   harpoon:list():select(3)
 end)
-keymap.set("n", "<C-s>", function()
+keymap.set("n", "<C-4>", function()
   harpoon:list():select(4)
 end)
 
