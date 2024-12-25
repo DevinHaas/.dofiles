@@ -4,10 +4,6 @@ local opts = { noremap = true, silent = true }
 keymap.set("n", "x", '"_x')
 keymap.set("i", "kj", "<Esc>")
 
--- Increment/decrement
-keymap.set("n", "+", "<C-a>")
-keymap.set("n", "-", "<C-x>")
-
 -- Select all
 keymap.set("n", "<C-a>", "gg<S-v>G")
 
@@ -49,16 +45,16 @@ keymap.set("n", "<C-e>", function()
   harpoon.ui:toggle_quick_menu(harpoon:list())
 end)
 
-keymap.set("n", "<C-1>", function()
+keymap.set("n", "<leader>1", function()
   harpoon:list():select(1)
 end)
-keymap.set("n", "<C-2>", function()
+keymap.set("n", "<leader>2", function()
   harpoon:list():select(2)
 end)
-keymap.set("n", "<C-3>", function()
+keymap.set("n", "<leader>3", function()
   harpoon:list():select(3)
 end)
-keymap.set("n", "<C-4>", function()
+keymap.set("n", "<leader>4", function()
   harpoon:list():select(4)
 end)
 
