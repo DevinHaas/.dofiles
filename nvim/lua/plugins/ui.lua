@@ -7,6 +7,19 @@ return {
     "nvim-lualine/lualine.nvim",
     enabled = false,
   },
+
+  {
+    "nvim-neo-tree/neo-tree.nvim",
+    enabled = false, -- Disable Neo-tree entirely
+    config = function()
+      require("neo-tree").setup({
+        filesystem = {
+          hijack_netrw_behavior = "disabled", -- Do not hijack netrw
+          auto_open = false, -- Disable auto-opening
+        },
+      })
+    end,
+  },
   -- messages, cmdline and the popupmenu
   {
     "folke/noice.nvim",
