@@ -14,6 +14,7 @@ after-login-command = []
 # Available commands : https://nikitabobko.github.io/AeroSpace/commands
 after-startup-command = [
   #'exec-and-forget sketchybar',
+  'exec-and-forget borders'
 ]
 
 # Notify Sketchybar about workspace change
@@ -137,6 +138,7 @@ alt-m = 'workspace M' #fro mail
 alt-t = 'workspace T' #for Terminal
 alt-s = 'workspace S' #for spotify 
 alt-p = 'workspace P' #for postman 
+alt-w = 'workspace W' #for WhatsApp
 
 
 # Mode apps binding
@@ -169,6 +171,7 @@ alt-shift-o = 'move-node-to-workspace O'
 alt-shift-t = 'move-node-to-workspace T'
 alt-shift-s = 'move-node-to-workspace S'
 alt-shift-p = 'move-node-to-workspace P'
+alt-shift-w = 'move-node-to-workspace W'
 
 
 # See: https://nikitabobko.github.io/AeroSpace/commands#workspace-back-and-forth
@@ -192,7 +195,6 @@ alt-shift-h = ['join-with left', 'mode main']
 alt-shift-j = ['join-with down', 'mode main']
 alt-shift-k = ['join-with up', 'mode main']
 alt-shift-l = ['join-with right', 'mode main']
-
 
 
 
