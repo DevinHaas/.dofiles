@@ -4,6 +4,8 @@ return {
     "williamboman/mason.nvim",
     opts = function(_, opts)
       vim.list_extend(opts.ensure_installed, {
+        "stylua",
+        "selene",
         "luacheck",
         "shellcheck",
         "shfmt",
@@ -128,8 +130,48 @@ return {
     },
   },
   {
-    "nvim-cmp",
-    dependencies = { "hrsh7th/cmp-emoji" },
+    "hrsh7th/nvim-cmp",
+    dependencies = {
+      "hrsh7th/cmp-emoji",
+      "hrsh7th/cmp/nvim-lsp",
+      "hrsh7th/cmp-buffer",
+      "hrsh7th/cmp-path",
+      "L3MON4D3/LuaSnip",
+      "onsails/lspkind-nvim",
+    },
+    config = function()
+      local cmp = require("cmp")
+      local luasnip = require("luasnip")
+
+      require("luasnip.loaders.from_vscode").lazy_load()
+      cmp.setup({
+        snippet = {
+          expand = function(args)
+            luasnip.lsp_expand(args.body)
+          end,
+        },
+        mapping = cmp.mapping.preset.insert({
+          ["<C-b>"] = cmp.mapping.scroll_docs(-4),
+          ["<C-f>"] = cmp.mapping.scroll_docs(4),
+          ["<C-Space>"] = cmp.mapping.complete(),
+          ["<C-e>"] = cmp.mapping.abort(),
+          ["<CR>"] = cmp.mapping.confirm({ select = true }),
+        }),
+
+        formatting = {
+          format = require("lspkind").cmp_format({
+            mode = "symbol", -- Show symbols + text
+            maxwidth = 50, -- Limit width of completion items
+            ellipsis_char = "...",
+          }),
+        },
+
+        sources = cmp.config.sources({
+          { name = "nvim_lsp" },
+          { name = "luasnip" },
+        }, { name = "buffer" }, { name = "path" }),
+      })
+    end,
     opts = function(_, opts)
       table.insert(opts.sources, { name = "emoji" })
     end,
