@@ -201,7 +201,7 @@ alt-shift-l = ['join-with right', 'mode main']
 # Window detection 
 
 [[on-window-detected]]
-if.app-id = 'org.alacritty'
+if.app-id = 'com.mitchellh.ghostty'
 run = "move-node-to-workspace T"
 
 [[on-window-detected]]
