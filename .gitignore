@@ -5,3 +5,4 @@ xm1
 configstore
 coc
 nvim/lazy-lock.json
+tmux/plugins
