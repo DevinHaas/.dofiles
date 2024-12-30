@@ -1,13 +1,24 @@
 theme = catppuccin-mocha
 
+background = #000000
 background-opacity = 0.7
 background-blur-radius = 1
+
+font-family = JetBrainsMono Nerd Font Mono
+font-size = 20
+confirm-close-surface = false
+window-decoration = true
+cursor-style = block
+cursor-style-blink = false
+shell-integration-features = no-cursor
+
 
 term = xterm-256color
 
 macos-titlebar-style = hidden
 window-padding-x = 10
 window-padding-y = 10
+window-padding-balance = true
 
 
 macos-option-as-alt = right
@@ -15,6 +26,7 @@ macos-option-as-alt = right
 clipboard-read = allow
 clipboard-write = allow
 
+auto-update = check
 
-font-family = JetBrainsMono Nerd Font Mono
-font-size = 18
+keybind = super+=reload_config
+keybind = super+i=inspector:toggle
