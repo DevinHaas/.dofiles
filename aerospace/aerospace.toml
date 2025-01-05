@@ -132,12 +132,15 @@ alt-shift-equal = 'resize smart +50'
 alt-b = 'workspace B' #for Browser
 alt-c = 'workspace C' #for Code
 alt-e = 'workspace E' #for Finder
+alt-d = 'workspace D' #for Word
+alt-f = 'workspace F' #for Figma
 alt-o = 'workspace O' #for Notes (Obsidian)
 alt-m = 'workspace M' #fro mail 
 alt-t = 'workspace T' #for Terminal
 alt-s = 'workspace S' #for spotify 
 alt-p = 'workspace P' #for postman 
 alt-w = 'workspace W' #for WhatsApp
+
 
 
 # Mode apps binding
@@ -164,6 +167,7 @@ alt-shift-f = 'fullscreen'
 #ctrl-shift-9 = 'move-node-to-workspace 9'
 alt-shift-b = 'move-node-to-workspace B'
 alt-shift-c = 'move-node-to-workspace C'
+alt-shift-d = 'move-node-to-workspace D'
 alt-shift-e = 'move-node-to-workspace E'
 alt-shift-m = 'move-node-to-workspace M'
 alt-shift-o = 'move-node-to-workspace O'
@@ -230,12 +234,17 @@ run = "move-node-to-workspace E"
 
 
 [[on-window-detected]]
+if.app-id = 'com.microsoft.Word'
+run = "move-node-to-workspace D"
+
+
+[[on-window-detected]]
 if.app-id = 'net.whatsapp.WhatsApp'
 run = "move-node-to-workspace W"
 
 [[on-window-detected]]
 if.app-id = 'com.figma.Desktop'
-run = "move-node-to-workspace D"
+run = "move-node-to-workspace F"
 
 
 [[on-window-detected]]
