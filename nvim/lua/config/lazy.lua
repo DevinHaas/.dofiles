@@ -31,6 +31,7 @@ require("lazy").setup({
     { import = "lazyvim.plugins.extras.lang.tailwind" },
     { import = "lazyvim.plugins.extras.util.mini-hipatterns" },
     { "ThePrimeagen/vim-be-good" },
+    { import = "plugins.lsp" },
     { import = "plugins" },
   },
   defaults = {
