@@ -51,7 +51,7 @@ return {
           -- Configuration for extensions
           file_browser = {
             theme = "dropdown",
-            hijack_netrw = true,
+            hijack_netrw = false,
             mappings = {
               ["n"] = {
                 ["N"] = fb_actions.create,
