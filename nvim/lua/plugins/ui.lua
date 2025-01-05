@@ -120,27 +120,6 @@ return {
       })
     end,
   },
-  -- LazyGit integration with Telescope
-  {
-    "kdheepak/lazygit.nvim",
-    keys = {
-      {
-        "<leader> g",
-        ":LazyGit<Return>",
-        function()
-          require("lazygit").setup({
-            config = "~/.config/lazygit/config.yml",
-          })
-        end,
-        silent = true,
-        noremap = true,
-      },
-    },
-    -- optional for floating window border decoration
-    dependencies = {
-      "nvim-lua/plenary.nvim",
-    },
-  },
   {
     "kristijanhusak/vim-dadbod-ui",
     dependencies = {
