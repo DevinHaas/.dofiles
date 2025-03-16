@@ -29,6 +29,7 @@ return {
       sort = {
         sorter = "case_sensitive",
       },
+
       view = {
         width = 30,
         relativenumber = true,
@@ -38,12 +39,20 @@ return {
         group_empty = true,
       },
       filters = {
-        dotfiles = true,
+        dotfiles = false,
         custom = {
           "node_modules/.*",
+          "^.idea$", -- Hide `.idea`
+          "^.next$", -- Hide `.next`
+          "^.DS_Store$", -- Hide `.DS_Store`
         },
       },
+      git = {
+        ignore = false, -- Show files ignored by Git
+      },
+
       log = {
+
         enable = true,
         truncate = true,
         types = {
