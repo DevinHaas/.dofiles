@@ -28,9 +28,7 @@ return {
         expand = function(args)
           local luasnip = require("luasnip")
           -- Only expand if a real snippet exists
-          if luasnip.expandable() then
-            luasnip.lsp_expand(args.body)
-          end
+          luasnip.lsp_expand(args.body)
         end,
       },
       mapping = cmp.mapping.preset.insert({
