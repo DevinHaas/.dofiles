@@ -27,6 +27,7 @@ return {
     mason_lspconfig.setup({
       -- list of servers for mason to install
       ensure_installed = {
+        "clangd",
         "html",
         "tailwindcss",
         "lua_ls",
@@ -44,6 +45,8 @@ return {
         "black", -- python formatter
         "pylint",
         "eslint_d",
+        "clang-format", -- C/C++ formatter
+        "cpplint", -- C/C++ linter
       },
     })
   end,

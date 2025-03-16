@@ -91,6 +91,19 @@ return {
           filetypes = { "html", "typescriptreact", "javascriptreact", "css", "sass", "scss", "less", "svelte" },
         })
       end,
+      ["clangd"] = function()
+        lspconfig.clangd.setup({
+          capabilities = capabilities,
+          cmd = { "clangd", "--background-index" }, -- Optional: Enable background indexing
+          filetypes = { "c", "cpp", "objc", "objcpp" }, -- Specify file types
+          root_dir = lspconfig.util.root_pattern("compile_commands.json", "compile_flags.txt", ".git"),
+          settings = {
+            clangd = {
+              fallbackFlags = { "-std=c++17" },
+            },
+          },
+        })
+      end,
       ["lua_ls"] = function()
         -- configure lua server (with special settings)
         lspconfig["lua_ls"].setup({
