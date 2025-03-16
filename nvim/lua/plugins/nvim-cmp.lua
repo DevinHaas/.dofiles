@@ -7,7 +7,7 @@ return {
     "saadparwaiz1/cmp_luasnip", -- for autocompletion
     "rafamadriz/friendly-snippets", -- useful snippets
     "onsails/lspkind.nvim", -- vs-code like pictograms
-    "Jezda1337/nvim-html-css",
+    --"Jezda1337/nvim-html-css",
   },
   lazy = false,
   config = function()
@@ -22,11 +22,15 @@ return {
 
     cmp.setup({
       completion = {
-        completeopt = "menu,menuone,preview,noselect",
+        completeopt = "menu,menuone,preview",
       },
       snippet = { -- configure how nvim-cmp interacts with snippet engine
         expand = function(args)
-          luasnip.lsp_expand(args.body)
+          local luasnip = require("luasnip")
+          -- Only expand if a real snippet exists
+          if luasnip.expandable() then
+            luasnip.lsp_expand(args.body)
+          end
         end,
       },
       mapping = cmp.mapping.preset.insert({
@@ -36,14 +40,22 @@ return {
         ["<C-f>"] = cmp.mapping.scroll_docs(4),
         ["<C-Space>"] = cmp.mapping.complete(), -- show completion suggestions
         ["<C-e>"] = cmp.mapping.abort(), -- close completion window
-        ["<CR>"] = cmp.mapping.confirm({ select = false }),
+        ["<CR>"] = cmp.mapping.confirm({ select = true }),
       }),
       -- sources for autocompletion
       sources = cmp.config.sources({
-        { name = "nvim_lsp" },
-        { name = "luasnip" }, -- snippets
-        { name = "buffer" }, -- text within current buffer
-        { name = "path" }, -- file system paths
+        {
+          name = "nvim_lsp",
+          priority = 1000,
+          entry_filter = function(entry, ctx)
+            -- Remove snippet suggestions coming from LSP
+            local kind = entry:get_kind()
+            return kind ~= require("cmp.types").lsp.CompletionItemKind.Snippet
+          end,
+        },
+        { name = "path", priority = 900 }, -- file system paths
+        { name = "buffer", priority = 800 }, -- text within current buffer
+        { name = "luasnip", priority = 500 }, -- snippets
         { -- Add nvim-html-css source
           name = "html-css",
           option = {
