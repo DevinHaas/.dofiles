@@ -23,7 +23,6 @@ return {
 
       telescope.setup({
         defaults = {
-          -- Default configuration
           mappings = {
             i = {
               ["<C-h>"] = "which_key", -- Map <C-h> to show picker key hints
@@ -38,7 +37,20 @@ return {
           winblend = 0,
         },
         pickers = {
-          -- Custom configuration for built-in pickers
+          find_files = {
+            find_command = {
+              "rg",
+              "--no-ignore",
+              "--hidden",
+              "--files",
+              "-g",
+              "!**/node_modules/*",
+              "-g",
+              "!**/.next/*",
+              "-g",
+              "!**/.git/*",
+            },
+          }, -- Custom configuration for built-in pickers
           diagnostics = {
             theme = "ivy",
             initial_mode = "normal",
@@ -50,6 +62,8 @@ return {
         extensions = {
           -- Configuration for extensions
           file_browser = {
+            hidden = { file_browser = true, folder_browser = true },
+            prompt_path = true,
             theme = "dropdown",
             hijack_netrw = false,
             mappings = {
