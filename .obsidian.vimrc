@@ -1,0 +1,1 @@
+/Users/devinhasler/Documents/DevinsVault/.obsidian.vimrc

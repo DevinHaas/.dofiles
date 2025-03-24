@@ -31,6 +31,9 @@ keymap.set("n", "<C-S-l>", "<C-w>>")
 keymap.set("n", "<C-S-k>", "<C-w>+")
 keymap.set("n", "<C-S-j>", "<C-w>-")
 
+-- See messages provided by noice
+keymap.set("n", "<leader>n", "<cmd>Noice<CR>", { desc = "Open Noice Messages" })
+
 local harpoon = require("harpoon")
 
 -- REQUIRED
