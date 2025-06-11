@@ -1,4 +1,4 @@
-theme = catppuccin-mocha
+theme = fahrenheit
 
 background = #000000
 background-opacity = 0.7
@@ -28,5 +28,4 @@ clipboard-write = allow
 
 auto-update = check
 
-keybind = super+=reload_config
 keybind = super+i=inspector:toggle

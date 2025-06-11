@@ -1,66 +1,59 @@
 return {
   {
-    "catppuccin/nvim",
-    name = "catppuccin",
-    priority = 1000,
-    config = function()
-      require("catppuccin").setup({
-        flavour = "mocha", -- latte, frappe, macchiato, mocha
-        background = { -- :h background
-          light = "latte",
-          dark = "mocha",
-        },
-        transparent_background = true, -- disables setting the background color.
-        show_end_of_buffer = false, -- shows the '~' characters after the end of buffers
-        term_colors = false, -- sets terminal colors (e.g. `g:terminal_color_0`)
-        dim_inactive = {
-          enabled = false, -- dims the background color of inactive window
-          shade = "dark",
-          percentage = 0.15, -- percentage of the shade to apply to the inactive window
-        },
-        no_italic = false, -- Force no italic
-        no_bold = false, -- Force no bold
-        no_underline = false, -- Force no underline
-        styles = { -- Handles the styles of general hi groups (see `:h highlight-args`):
-          comments = { "italic" }, -- Change the style of comments
-          conditionals = { "italic" },
-          loops = {},
-          functions = {},
-          keywords = {},
-          strings = {},
-          variables = {},
-          numbers = {},
-          booleans = {},
-          properties = {},
-          types = {},
-          operators = {},
-        },
-        color_overrides = {},
-        custom_highlights = function(colors)
-          return {
-            Comment = { fg = colors.flamingo }, -- Customize comment color
-            TabLineSel = { bg = colors.pink }, -- Tab line selected
-            CmpBorder = { fg = colors.surface2 }, -- Border color for completion
-            Pmenu = { bg = colors.none }, -- Popup menu background
-            CursorLine = { bg = colors.surface0 }, -- Cursor line background
-          }
-        end,
-        default_integrations = true,
-        integrations = {
-          cmp = true,
-          gitsigns = true,
-          nvimtree = true,
-          treesitter = true,
-          notify = true,
-          mini = {
-            enabled = true,
-            indentscope_color = "",
+    "rebelot/kanagawa.nvim", -- The plugin name
+    lazy = false, -- Load immediately on startup
+    priority = 1000, -- High priority to ensure it loads before other plugins
+    opts = {
+      compile = false, -- Enable compiling the colorscheme
+      undercurl = true, -- Enable undercurls
+      commentStyle = { italic = true },
+      functionStyle = {},
+      keywordStyle = { italic = true },
+      statementStyle = { bold = true },
+      typeStyle = {},
+      transparent = true, -- Do not set background color (change to true for transparency)
+      dimInactive = false, -- Dim inactive windows
+      terminalColors = true, -- Define terminal colors
+      colors = { -- Add or modify colors
+        palette = {},
+        theme = {
+          wave = {},
+          lotus = {},
+          dragon = {},
+          all = {
+            ui = {
+              bg_gutter = "none",
+            },
           },
         },
-      })
+      },
+      overrides = function(colors) -- Add or modify highlights
+        local theme = colors.theme
+        return {
+          NormalFloat = { bg = "none" },
+          FloatBorder = { bg = "none" },
+          FloatTitle = { bg = "none" },
 
-      -- Apply the colorscheme
-      vim.cmd.colorscheme("catppuccin")
+          -- Save an hlgroup with dark background and dimmed foreground
+          -- so that you can use it where your still want darker windows.
+          -- E.g.: autocmd TermOpen * setlocal winhighlight=Normal:NormalDark
+          NormalDark = { fg = theme.ui.fg_dim, bg = theme.ui.bg_m3 },
+
+          -- Popular plugins that open floats will link to NormalFloat by default;
+          -- set their background accordingly if you wish to keep them dark and borderless
+          LazyNormal = { bg = theme.ui.bg_m3, fg = theme.ui.fg_dim },
+          MasonNormal = { bg = theme.ui.bg_m3, fg = theme.ui.fg_dim },
+        }
+      end,
+      theme = "wave", -- Load the "wave" theme
+      background = { -- Map background to theme
+        dark = "wave", -- Use "wave" for dark mode
+        light = "lotus", -- Use "lotus" for light mode
+      },
+    },
+    config = function(_, opts) -- Config function to apply the colorscheme
+      require("kanagawa").setup(opts) -- Setup with the provided options (Lazy.nvim handles this automatically via opts)
+      vim.cmd("colorscheme kanagawa") -- Apply the colorscheme
     end,
   },
 }
