@@ -3,6 +3,7 @@ return {
   dependencies = {
     "hrsh7th/cmp-buffer", -- source for text in buffer
     "hrsh7th/cmp-path", -- source for file system paths
+    "hrsh7th/cmp-cmdline",
     "L3MON4D3/LuaSnip",
     "saadparwaiz1/cmp_luasnip", -- for autocompletion
     "rafamadriz/friendly-snippets", -- useful snippets
@@ -76,7 +77,31 @@ return {
         format = lspkind.cmp_format({
           maxwidth = 50,
           ellipsis_char = "...",
+          symbol_map = { Copilot = "" },
         }),
+      },
+    })
+
+    cmp.setup.cmdline({ "/", "?" }, {
+      mapping = cmp.mapping.preset.cmdline(),
+      sources = {
+        { name = "buffer" },
+      },
+    })
+    cmp.setup.cmdline(":", {
+      mapping = cmp.mapping.preset.cmdline(),
+      sources = cmp.config.sources({
+        { name = "path", option = { trailing_slash = true } },
+      }, {
+        { name = "cmdline", option = { treat_trailing_slash = false } },
+      }),
+      matching = { disallow_symbol_nonprefix_matching = false },
+    })
+    cmp.setup.filetype("tex", {
+      sources = {
+        { name = "vimtex" },
+        { name = "luasnip" },
+        { name = "buffer" },
       },
     })
   end,

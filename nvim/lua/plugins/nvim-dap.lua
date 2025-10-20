@@ -3,16 +3,11 @@ return {
     "mfussenegger/nvim-dap",
     dependencies = {
       "mxsdev/nvim-dap-vscode-js",
-      {
-        "microsoft/vscode-js-debug",
-        version = "1.x",
-        build = "pnpm i && pnpm run compile vsDebugServerBundle && mv dist out",
-      },
       "jay-babu/mason-nvim-dap.nvim",
       "rcarriga/nvim-dap-ui",
       "theHamsta/nvim-dap-virtual-text",
       "nvim-neotest/nvim-nio",
-      "williamboman/mason.nvim",
+      "mason-org/mason.nvim",
     },
     config = function()
       local dap = require("dap")
@@ -109,7 +104,7 @@ return {
     "jay-babu/mason-nvim-dap.nvim",
     dependencies = {
       "mfussenegger/nvim-dap",
-      "williamboman/mason.nvim",
+      "mason-org/mason.nvim",
     },
     opts = {
       ensure_installed = {
