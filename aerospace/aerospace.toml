@@ -56,7 +56,7 @@ key-mapping.preset = 'qwerty'
 on-focused-monitor-changed = ['move-mouse monitor-lazy-center']
 on-focus-changed = "move-mouse window-lazy-center"
 
-automatically-unhide-macos-hidden-apps = false
+automatically-unhide-macos-hidden-apps = false 
 
 # Gaps between windows (inner-*) and between monitor edges (outer-*).
 # Possible values:
@@ -97,7 +97,6 @@ outer.right =      10
 # See: https://nikitabobko.github.io/AeroSpace/commands#exec-and-forget
 # alt-enter = 'exec-and-forget open -n /System/Applications/Utilities/Terminal.app'
 
-cmd-h = [] # Disable "hide application"
 
 # See: https://nikitabobko.github.io/AeroSpace/commands#layout
 alt-period = 'layout tiles horizontal vertical'
@@ -218,6 +217,10 @@ if.app-id = 'company.thebrowser.Browser'
 run = "move-node-to-workspace B"
 
 [[on-window-detected]]
+if.app-id = 'app.zen-browser.zen'
+run = "move-node-to-workspace B"
+
+[[on-window-detected]]
 if.app-id = 'com.jetbrains.intellij'
 run = "move-node-to-workspace C"
 
@@ -226,8 +229,18 @@ if.app-id = 'com.apple.dt.Xcode'
 run = "move-node-to-workspace C"
 
 [[on-window-detected]]
+if.app-id = 'dev.kdrag0n.MacVirt'
+run = "move-node-to-workspace C"
+
+[[on-window-detected]]
 if.app-id = 'com.microsoft.VSCode'
 run = "move-node-to-workspace C"
+
+[[on-window-detected]]
+if.app-id = 'com.todesktop.230313mzl4w4u92'
+run = "move-node-to-workspace C"
+
+
 
 [[on-window-detected]]
 if.app-id = 'com.spotify.client'
@@ -236,6 +249,12 @@ run = "move-node-to-workspace S"
 [[on-window-detected]]
 if.app-id = 'com.microsoft.Outlook'
 run = "move-node-to-workspace M"
+
+[[on-window-detected]]
+if.app-id = 'org.mozilla.thunderbird'
+run = "move-node-to-workspace M"
+
+
 
 [[on-window-detected]]
 if.app-id = 'com.apple.finder'
@@ -247,6 +266,19 @@ run = "move-node-to-workspace I"
 
 [[on-window-detected]]
 if.app-id = 'com.microsoft.Word'
+run = "move-node-to-workspace D"
+
+[[on-window-detected]]
+if.app-id = 'com.microsoft.Excel'
+run = "move-node-to-workspace D"
+
+[[on-window-detected]]
+if.app-id = 'com.microsoft.Powerpoint'
+run = "move-node-to-workspace D"
+
+
+[[on-window-detected]]
+if.app-id = 'com.microsoft.edgemac'
 run = "move-node-to-workspace D"
 
 
