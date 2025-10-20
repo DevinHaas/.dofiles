@@ -1,0 +1,127 @@
+return {
+  {
+    "nvim-telescope/telescope.nvim",
+    branch = "master",
+    priority = 1000,
+    dependencies = {
+      {
+        "nvim-telescope/telescope-fzf-native.nvim",
+        build = "make",
+      },
+      "nvim-telescope/telescope-file-browser.nvim",
+      "folke/noice.nvim",
+    },
+    config = function()
+      local telescope = require("telescope")
+      local actions = require("telescope.actions")
+      local fb_actions = require("telescope").extensions.file_browser.actions
+
+      telescope.setup({
+        defaults = {
+          mappings = {
+            i = {
+              ["<C-h>"] = "which_key", -- Map <C-h> to show picker key hints
+              ["<C-u>"] = require("telescope.actions").preview_scrolling_up,
+              ["<C-d>"] = require("telescope.actions").preview_scrolling_down,
+            },
+          },
+          wrap_results = true,
+          layout_strategy = "horizontal",
+          layout_config = {
+            prompt_position = "top",
+          },
+          sorting_strategy = "ascending",
+          winblend = 0,
+        },
+        pickers = {
+          find_files = {
+            find_command = {
+              "rg",
+              "--no-ignore",
+              "--hidden",
+              "--files",
+              "-g",
+              "!**/node_modules/*",
+              "-g",
+              "!**/.next/*",
+              "-g",
+              "!**/.git/*",
+            },
+          }, -- Custom configuration for built-in pickers
+          diagnostics = {
+            theme = "ivy",
+            initial_mode = "normal",
+            layout_config = {
+              preview_cutoff = 9999,
+            },
+          },
+        },
+        preview = {
+          treesitter = false,
+        },
+        extensions = {
+          -- Configuration for extensions
+          file_browser = {
+            hidden = { file_browser = true, folder_browser = true },
+            prompt_path = true,
+            theme = "dropdown",
+            hijack_netrw = false,
+            mappings = {
+              ["n"] = {
+                ["N"] = fb_actions.create,
+                ["h"] = fb_actions.goto_parent_dir,
+                ["<C-u>"] = function(prompt_bufnr)
+                  for i = 1, 10 do
+                    actions.move_selection_previous(prompt_bufnr)
+                  end
+                end,
+                ["<C-d>"] = function(prompt_bufnr)
+                  for i = 1, 10 do
+                    actions.move_selection_next(prompt_bufnr)
+                  end
+                end,
+              },
+            },
+          },
+        },
+      })
+
+      -- Load Telescope extensions
+      telescope.load_extension("fzf")
+      telescope.load_extension("file_browser")
+      require("telescope").load_extension("noice")
+
+      -- Add custom keybindings
+      local builtin = require("telescope.builtin")
+      vim.keymap.set("n", "<leader>ff", builtin.find_files, { desc = "Telescope find files" })
+      vim.keymap.set("n", "<leader>fr", builtin.oldfiles, { desc = "Telescope recent files" })
+      vim.keymap.set("n", "<leader>fs", builtin.live_grep, { desc = "Telescope live grep" })
+      vim.keymap.set("n", "<leader>fd", builtin.diagnostics, { desc = "Telescope diagnostics" })
+
+      vim.keymap.set("n", "sf", function()
+        local function telescope_buffer_dir()
+          return vim.fn.expand("%:p:h")
+        end
+
+        telescope.extensions.file_browser.file_browser({
+          path = "%:p:h",
+          cwd = telescope_buffer_dir(),
+          respect_gitignore = false,
+          hidden = true,
+          grouped = true,
+          previewer = false,
+          initial_mode = "normal",
+          layout_config = { height = 40 },
+        })
+      end, { desc = "Open File Browser with the path of the current buffer" })
+    end,
+  },
+  {
+    "nvim-telescope/telescope-frecency.nvim",
+    -- install the latest stable version
+    version = "*",
+    config = function()
+      require("telescope").load_extension("frecency")
+    end,
+  },
+}
