@@ -33,6 +33,8 @@ keymap.set("n", "<C-S-j>", "<C-w>-")
 
 -- See messages provided by noice
 keymap.set("n", "<leader>n", "<cmd>Noice<CR>", { desc = "Open Noice Messages" })
+keymap.set("n", "<leader>nd", "<cmd>NoiceDismiss<CR>", { desc = "Dismiss Noice Messages" })
+keymap.set("n", "<leader>fn", "<cmd>NoiceTelescope<CR>", { desc = "Noice messages telescope" })
 
 local harpoon = require("harpoon")
 

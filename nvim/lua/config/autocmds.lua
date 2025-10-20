@@ -13,3 +13,11 @@ vim.api.nvim_create_autocmd("BufWritePre", {
     vim.lsp.buf.format({ async = false })
   end,
 })
+
+vim.api.nvim_create_autocmd("CursorHold", {
+  pattern = "*",
+  callback = function()
+    vim.cmd("checktime")
+  end,
+  desc = "Check for external file changes on CursorHold",
+})
