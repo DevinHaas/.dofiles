@@ -4,14 +4,12 @@ return {
   dependencies = {
     "hrsh7th/cmp-nvim-lsp",
     { "antosha417/nvim-lsp-file-operations", config = true },
-    "williamboman/mason-lspconfig.nvim",
+    "mason.nvim",
+    "mason-org/mason-lspconfig.nvim",
   },
   config = function()
     -- import lspconfig plugin
     local lspconfig = require("lspconfig")
-
-    -- import mason_lspconfig plugin
-    local mason_lspconfig = require("mason-lspconfig")
 
     -- import cmp-nvim-lsp plugin
     local cmp_nvim_lsp = require("cmp_nvim_lsp")
@@ -77,51 +75,5 @@ return {
       local hl = "DiagnosticSign" .. type
       vim.fn.sign_define(hl, { text = icon, texthl = hl, numhl = "" })
     end
-
-    mason_lspconfig.setup_handlers({
-      -- default handler for installed servers
-      function(server_name)
-        lspconfig[server_name].setup({
-          capabilities = capabilities,
-        })
-      end,
-      ["emmet_ls"] = function()
-        -- configure emmet language server
-        lspconfig["emmet_ls"].setup({
-          capabilities = capabilities,
-          filetypes = { "html", "typescriptreact", "javascriptreact", "css", "sass", "scss", "less", "svelte" },
-        })
-      end,
-      ["clangd"] = function()
-        lspconfig.clangd.setup({
-          capabilities = capabilities,
-          cmd = { "clangd", "--background-index" }, -- Optional: Enable background indexing
-          filetypes = { "c", "cpp", "objc", "objcpp" }, -- Specify file types
-          root_dir = lspconfig.util.root_pattern("compile_commands.json", "compile_flags.txt", ".git"),
-          settings = {
-            clangd = {
-              fallbackFlags = { "-std=c++17" },
-            },
-          },
-        })
-      end,
-      ["lua_ls"] = function()
-        -- configure lua server (with special settings)
-        lspconfig["lua_ls"].setup({
-          capabilities = capabilities,
-          settings = {
-            Lua = {
-              -- make the language server recognize "vim" global
-              diagnostics = {
-                globals = { "vim" },
-              },
-              completion = {
-                callSnippet = "Replace",
-              },
-            },
-          },
-        })
-      end,
-    })
   end,
 }
