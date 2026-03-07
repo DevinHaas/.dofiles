@@ -7,3 +7,15 @@ coc
 nvim/lazy-lock.json
 tmux/plugins
 tmux/Downlaods
+gtk-2.0
+gtk-3.0
+.claude
+opencode/node_modules
+opencode/bun.lock
+opencode/pnpm-lock.yaml
+neonctl/credentials.json
+goose/*.bak*
+envman
+yazi/*.toml-*
+nvim/test*
+macos-latest-universal*
