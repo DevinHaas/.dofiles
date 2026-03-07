@@ -56,6 +56,7 @@ key-mapping.preset = 'qwerty'
 on-focused-monitor-changed = ['move-mouse monitor-lazy-center']
 on-focus-changed = "move-mouse window-lazy-center"
 
+
 automatically-unhide-macos-hidden-apps = false 
 
 # Gaps between windows (inner-*) and between monitor edges (outer-*).
@@ -66,12 +67,16 @@ automatically-unhide-macos-hidden-apps = false
 #                 Monitor pattern is the same as for 'workspace-to-monitor-force-assignment'.
 #                 See: https://nikitabobko.github.io/AeroSpace/guide#assign-workspaces-to-monitors
 [gaps]
-inner.horizontal = 10
-inner.vertical =   10
-outer.left =       10
-outer.bottom =     10
-outer.top =        10
-outer.right =      10 
+inner.horizontal = 8
+inner.vertical = 8
+outer.bottom = 5
+outer.top = [
+  { monitor."built-in" = 10 },
+  { monitor."main" = 50 },
+  50
+]
+outer.left = 5
+outer.right = 5
 
 # 'main' binding mode declaration
 # See: https://nikitabobko.github.io/AeroSpace/guide#binding-modes
@@ -129,7 +134,7 @@ alt-shift-equal = 'resize smart +50'
 #ctrl-9 = 'workspace 9'
 alt-b = 'workspace B' #for Browser
 alt-c = 'workspace C' #for Code
-alt-e = 'workspace E' #for Finder
+alt-e = ['exec-and-forget aerospace list-windows --workspace E 2>/dev/null | grep -q Yazi || /Applications/Ghostty.app/Contents/MacOS/ghostty --title=Yazi -e yazi &', 'workspace E'] #for Files (Yazi)
 alt-d = 'workspace D' #for Word
 alt-f = 'workspace F' #for Figma
 alt-i = 'workspace I' #for Todoist 
@@ -202,11 +207,18 @@ alt-shift-l = ['join-with right', 'mode main']
 
 
 
-# Window detection 
+# Window detection
+
+[[on-window-detected]]
+if.app-id = 'com.mitchellh.ghostty'
+if.window-title-regex-substring = 'yazi'
+check-further-callbacks = false
+run = "move-node-to-workspace E"
 
 [[on-window-detected]]
 if.app-id = 'com.mitchellh.ghostty'
 run = "move-node-to-workspace T"
+check-further-callbacks = true
 
 [[on-window-detected]]
 if.app-id = 'md.obsidian'
@@ -218,6 +230,10 @@ run = "move-node-to-workspace B"
 
 [[on-window-detected]]
 if.app-id = 'app.zen-browser.zen'
+run = "move-node-to-workspace B"
+
+[[on-window-detected]]
+if.app-id = 'com.vivaldi.Vivaldi'
 run = "move-node-to-workspace B"
 
 [[on-window-detected]]
@@ -257,10 +273,6 @@ run = "move-node-to-workspace M"
 
 
 [[on-window-detected]]
-if.app-id = 'com.apple.finder'
-run = "move-node-to-workspace E"
-
-[[on-window-detected]]
 if.app-id = 'com.todoist.mac.Todoist'
 run = "move-node-to-workspace I"
 
@@ -287,6 +299,11 @@ if.app-id = 'net.whatsapp.WhatsApp'
 run = "move-node-to-workspace W"
 
 [[on-window-detected]]
+if.app-id = 'com.automattic.beeper.desktop'
+run = "move-node-to-workspace W"
+
+
+[[on-window-detected]]
 if.app-id = 'com.figma.Desktop'
 run = "move-node-to-workspace F"
 
@@ -295,8 +312,9 @@ run = "move-node-to-workspace F"
 if.app-id = 'com.postmanlabs.mac'
 run = "move-node-to-workspace P"
 
+
 [[on-window-detected]]
-if.app-name-regex-substring = 'finder'
+if.app-id = 'com.apple.Preview'
 run = 'layout floating'
 
 [[on-window-detected]]
