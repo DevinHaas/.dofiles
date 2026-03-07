@@ -16,8 +16,8 @@ shell-integration-features = no-cursor
 term = xterm-256color
 
 macos-titlebar-style = hidden
-window-padding-x = 10
-window-padding-y = 10
+window-padding-x = 5
+window-padding-y = 5
 window-padding-balance = true
 
 
