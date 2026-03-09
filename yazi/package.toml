@@ -1,5 +1,14 @@
-[plugin]
-deps = []
+[[plugin.deps]]
+use = "boydaihungst/save-clipboard-to-file"
+rev = "4f034ac"
+hash = "4bdfecaa643db1cc28ccba799463d5b8"
 
-[flavor]
-deps = [{ use = "yazi-rs/flavors:catppuccin-mocha", rev = "8458d25" }]
+[[plugin.deps]]
+use = "yazi-rs/plugins:smart-enter"
+rev = "1962818"
+hash = "187cc58ba7ac3befd49c342129e6f1b6"
+
+[[flavor.deps]]
+use = "yazi-rs/flavors:catppuccin-mocha"
+rev = "8458d25"
+hash = ""
