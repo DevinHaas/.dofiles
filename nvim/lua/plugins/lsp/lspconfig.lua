@@ -62,6 +62,15 @@ return {
 
         opts.desc = "Restart LSP"
         keymap.set("n", "<leader>rs", ":LspRestart<CR>", opts) -- mapping to restart lsp if necessary
+
+        opts.desc = "Organize imports"
+        keymap.set("n", "<leader>co", LazyVim.lsp.action["source.organizeImports"], opts)
+
+        opts.desc = "Remove unused imports"
+        keymap.set("n", "<leader>cu", LazyVim.lsp.action["source.removeUnused.ts"], opts)
+
+        opts.desc = "Add missing imports"
+        keymap.set("n", "<leader>cm", LazyVim.lsp.action["source.addMissingImports.ts"], opts)
       end,
     })
 
