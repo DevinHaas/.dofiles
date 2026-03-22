@@ -37,15 +37,18 @@ return {
           find_files = {
             find_command = {
               "rg",
-              "--no-ignore",
-              "--hidden",
               "--files",
+              "--hidden",
+              "--no-ignore",
+              "--no-ignore-parent",
               "-g",
               "!**/node_modules/*",
               "-g",
               "!**/.next/*",
               "-g",
               "!**/.git/*",
+              "-g",
+              "!**/.pnpm-store/*",
             },
           }, -- Custom configuration for built-in pickers
           diagnostics = {
