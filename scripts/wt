@@ -1,0 +1,137 @@
+#!/usr/bin/env bash
+# wt — create git worktree + new tmux window + launch claude
+
+show_help() {
+  cat <<EOF
+Usage: wt [OPTIONS] <branch-name>
+
+Create a git worktree, copy ignored files, and open a new tmux window
+with claude launched inside.
+
+MODES
+  wt <branch-name>            Create worktree for <branch-name>
+  wt --db <branch-name>       Create worktree + isolated Neon DB branch
+  wt -d <branch-name>         Delete worktree (and Neon branch if it exists)
+
+OPTIONS
+  --db                        Create an isolated Neon database branch.
+                              Reads NEON_PROJECT_ID from .env; updates
+                              DATABASE_URL in the worktree's .env.
+  -d, --delete                Delete an existing worktree and its Neon branch.
+  -h, --help                  Show this help message and exit.
+
+NOTES
+  - Must be run inside an active tmux session.
+  - Must be run from inside a git repository.
+  - Worktrees are created at ~/worktrees/<project>/<branch-name>.
+  - Gitignored files (e.g. .env, certs) are copied automatically;
+    build artifacts (node_modules, .next, dist, etc.) are excluded.
+  - bun install is run automatically in the new worktree.
+EOF
+}
+
+# Parse args: extract --db flag and positional args
+create_db=false
+args=()
+for arg in "$@"; do
+  [[ $arg == "--db" ]] && create_db=true || args+=("$arg")
+done
+
+# Help (runs before tmux check so it works outside tmux)
+if [[ $1 == "-h" || $1 == "--help" ]]; then
+  show_help
+  exit 0
+fi
+
+if [[ -z $TMUX ]]; then
+  echo "Error: wt must be run inside a tmux session"
+  exit 1
+fi
+
+if [[ -z $1 ]]; then
+  echo "Usage: wt <branch-name>"
+  echo "Run 'wt -h' for full usage."
+  exit 1
+fi
+
+# Delete mode
+if [[ ${args[0]} == "-d" || ${args[0]} == "--delete" ]]; then
+  if [[ -z ${args[1]} ]]; then
+    echo "Usage: wt -d <branch-name>"
+    exit 1
+  fi
+  branch_name=${args[1]}
+  project_root=$(git rev-parse --show-toplevel 2>/dev/null)
+  if [[ -z $project_root ]]; then
+    echo "Error: not inside a git repository"
+    exit 1
+  fi
+  project_name=$(basename "$project_root")
+  worktree_dir="$HOME/worktrees/$project_name/$branch_name"
+
+  # Neon branch cleanup (always attempted on delete, regardless of --db flag)
+  neon_project_id=$(grep -E '^NEON_PROJECT_ID=' "$project_root/.env" 2>/dev/null | cut -d= -f2-)
+  if [[ -z $neon_project_id ]]; then
+    echo "Warning: NEON_PROJECT_ID not found in .env — skipping Neon branch cleanup"
+  elif neonctl branches get "$branch_name" --project-id "$neon_project_id" &>/dev/null; then
+    neonctl branches delete "$branch_name" --project-id "$neon_project_id"
+    echo "Deleted Neon branch: $branch_name"
+  fi
+
+  git -C "$project_root" worktree remove "$worktree_dir" --force
+  echo "Removed worktree: $worktree_dir"
+  exit 0
+fi
+
+branch_name=${args[0]}
+
+project_root=$(git rev-parse --show-toplevel 2>/dev/null)
+if [[ -z $project_root ]]; then
+  echo "Error: not inside a git repository"
+  exit 1
+fi
+
+project_name=$(basename "$project_root")
+worktree_dir="$HOME/worktrees/$project_name/$branch_name"
+
+mkdir -p "$HOME/worktrees/$project_name"
+
+if [[ ! -d $worktree_dir ]]; then
+  git -C "$project_root" worktree add -b "$branch_name" "$worktree_dir" 2>/dev/null \
+    || git -C "$project_root" worktree add "$worktree_dir" "$branch_name"
+
+  # Copy important gitignored files (env, secrets, local configs, certs, etc.)
+  # Excludes build artifacts, dependency dirs, caches, and generated files
+  while IFS= read -r ignored_file; do
+    [[ -d "$project_root/$ignored_file" ]] && continue
+    case "$ignored_file" in
+      node_modules/*|.next/*|.nuxt/*|dist/*|build/*|out/*|\
+      coverage/*|.cache/*|.turbo/*|tmp/*|temp/*|logs/*|\
+      *.log|*.map|*.tsbuildinfo) continue ;;
+    esac
+    dest="$worktree_dir/$ignored_file"
+    mkdir -p "$(dirname "$dest")"
+    cp "$project_root/$ignored_file" "$dest"
+  done < <(git -C "$project_root" ls-files --others --ignored --exclude-standard)
+
+  # Neon DB branch creation (opt-in via --db flag)
+  if [[ $create_db == true ]]; then
+    neon_project_id=$(grep -E '^NEON_PROJECT_ID=' "$worktree_dir/.env" 2>/dev/null | cut -d= -f2-)
+    if [[ -z $neon_project_id ]]; then
+      echo "Warning: --db flag set but NEON_PROJECT_ID not found in .env — skipping DB branch"
+    else
+      db_url=$(neonctl branches create \
+        --project-id "$neon_project_id" \
+        --name "$branch_name" \
+        --output json | jq -r '.connection_uris[0].connection_uri')
+      sed -i '' "s|^DATABASE_URL=.*|DATABASE_URL=$db_url|" "$worktree_dir/.env"
+      echo "Created Neon branch: $branch_name"
+    fi
+  fi
+
+  # Install dependencies
+  (cd "$worktree_dir" && bun install)
+fi
+
+tmux new-window -c "$worktree_dir" -n "$branch_name"
+tmux send-keys "claude" Enter

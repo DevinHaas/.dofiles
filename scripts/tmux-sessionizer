@@ -1,0 +1,40 @@
+#!/usr/bin/env bash
+
+# If you pass a project folder as an argument, use it
+selected=$1
+
+# Otherwise, use fzf to select a project directory
+if [[ -z $selected ]]; then
+  selected=$(find ~/IdeaProjects/ ~/projects ~/ -mindepth 1 -maxdepth 1 -type d | fzf)
+fi
+
+# If no selection, exit
+if [[ -z $selected ]]; then
+  exit 0
+fi
+
+# Clean the selected name for tmux session naming
+selected_name=$(basename "$selected" | tr . _)
+
+# Check if tmux is running
+tmux_running=$(pgrep tmux)
+
+# If we're not in tmux (empty $TMUX), and tmux isn't running, start a new session
+if [[ -z $TMUX ]] && [[ -z $tmux_running ]]; then
+  # Start a new tmux session and attach to it
+  tmux new-session -s $selected_name -c $selected
+  exit 0
+fi
+
+# If session doesn't exist, create it
+if ! tmux has-session -t=$selected_name 2>/dev/null; then
+  tmux new-session -ds $selected_name -c $selected
+fi
+
+# If inside tmux, try to switch to the session
+if [[ -n $TMUX ]]; then
+  tmux switch-client -t $selected_name
+else
+  # If not inside tmux, attach to the session (this also happens if $TMUX is empty)
+  tmux attach-session -t $selected_name
+fi
