@@ -7,7 +7,8 @@ return {
   },
   config = function()
     vim.g.opencode_opts = {
-      -- Your configuration, if any — see `lua/opencode/config.lua`
+      -- Backend URL - use the OpenCode CLI server
+      backend_url = "http://localhost:3000",
     }
 
     -- Required for `vim.g.opencode_opts.auto_reload`
