@@ -1,0 +1,12 @@
+{
+  "mcpServers": {
+    "git": {
+      "args": [
+        "mcp-server-git",
+        "--repository",
+        "${REPOSITORY_PATH}"
+      ],
+      "command": "uvx"
+    }
+  }
+}

@@ -1,0 +1,2 @@
+LITELLM_HOST: https://litellm.bleat.ch/
+LITELLM_BASE_PATH: v1/chat/completions
