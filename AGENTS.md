@@ -1,0 +1,20 @@
+# Agent Quickstart
+- Repo houses personal configs; adjust per tool directory.
+- No .cursor or Cursor rules are present.
+- Copilot instruction files in github-copilot/intellij/ are empty.
+- Build: `make -f sketchybar/helper/makerfile helper` compiles the C helper.
+- Rebuild helper after editing headers `cpu.h` or `clock.h`.
+- Lua lint: `stylua --check nvim`; format with `stylua nvim`.
+- Shell scripts: run `shellcheck` manually if available.
+- Testing: no automated suites; validate by running the target app.
+- Single test: not applicable; reproduce behaviour via focused manual run.
+- Lua: 2-space indent, 120 cols, double quotes, trailing commas where allowed.
+- Lua modules return tables; prefer `local` binds and explicit requires.
+- Lua keymaps/options live under `nvim/lua/config`; follow existing naming.
+- Shell (plugins): use POSIX sh, quote expansions, prefer `[[` only in bash.
+- Bash scripts (tmux-sessionizer): keep snake_case vars and guard tmux commands.
+- C helper: stick to snake_case, K&R braces, explicit buffer sizes, exit on error.
+- JSON/TOML: keep sorted keys, 2-space indentation, trailing commas forbidden.
+- Avoid adding unused plugins; keep Lazy specs declarative and commented briefly.
+- Prefer idempotent changes; configs may be symlinked into multiple hosts.
+- Document impactful changes inline with concise comments only when necessary.
