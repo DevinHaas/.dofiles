@@ -320,7 +320,7 @@ case "$1" in
 "Reminders")
   icon_result=":reminders:"
   ;;
-"Preview" | "Skim" | "zathura")
+"Preview" | "Skim" | "sioyek")
   icon_result=":pdf:"
   ;;
 "1Password 7")

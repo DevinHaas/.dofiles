@@ -36,7 +36,7 @@ edit = [
 	{ run = 'code -w %*', block = true,  desc = "code (block)",   for = "windows" },
 ]
 pdf = [
-	{ run = 'zathura "$@"', orphan = true, desc = "zathura", for = "macos" },
+	{ run = 'sioyek "$@"', orphan = true, desc = "sioyek", for = "macos" },
 ]
 open = [
 	{ run = 'xdg-open "$1"',                desc = "Open", for = "linux" },
