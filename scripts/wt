@@ -97,17 +97,16 @@ worktree_dir="$HOME/worktrees/$project_name/$branch_name"
 mkdir -p "$HOME/worktrees/$project_name"
 
 if [[ ! -d $worktree_dir ]]; then
-  git -C "$project_root" worktree add -b "$branch_name" "$worktree_dir" 2>/dev/null \
-    || git -C "$project_root" worktree add "$worktree_dir" "$branch_name"
+  git -C "$project_root" worktree add -b "$branch_name" "$worktree_dir" 2>/dev/null ||
+    git -C "$project_root" worktree add "$worktree_dir" "$branch_name"
 
   # Copy important gitignored files (env, secrets, local configs, certs, etc.)
   # Excludes build artifacts, dependency dirs, caches, and generated files
   while IFS= read -r ignored_file; do
     [[ -d "$project_root/$ignored_file" ]] && continue
     case "$ignored_file" in
-      node_modules/*|.next/*|.nuxt/*|dist/*|build/*|out/*|\
-      coverage/*|.cache/*|.turbo/*|tmp/*|temp/*|logs/*|\
-      *.log|*.map|*.tsbuildinfo) continue ;;
+    coverage/* | .cache/* | .turbo/* | tmp/* | temp/* | logs/* | \
+      *.log | *.map | *.tsbuildinfo) continue ;;
     esac
     dest="$worktree_dir/$ignored_file"
     mkdir -p "$(dirname "$dest")"
