@@ -1,0 +1,23 @@
+{
+  "title": "neru: tap Left Command → recursive grid",
+  "rules": [
+    {
+      "description": "Left Command alone → neru recursive_grid (hold = normal Command)",
+      "manipulators": [
+        {
+          "type": "basic",
+          "from": {
+            "key_code": "left_command",
+            "modifiers": { "optional": ["any"] }
+          },
+          "to": [
+            { "key_code": "left_command", "lazy": true }
+          ],
+          "to_if_alone": [
+            { "shell_command": "/opt/homebrew/bin/neru recursive_grid" }
+          ]
+        }
+      ]
+    }
+  ]
+}
